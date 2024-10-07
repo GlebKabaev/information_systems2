@@ -44,30 +44,17 @@ public class MainViewController implements Subject{
         MainView mv=MainView.openFrame();
         mv.update(books);
     }
+    
 
 
 
-
-
-
-
-
-
-
-
-
-
-public static JButton DBButton(JTextField textField,JLabel label) {
-    JButton button = new JButton("Показать текст");
+public JButton DBButton() {
+    JButton button = new JButton("база пошла");
     
     button.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Получение текста из текстового поля и вывод в консоль
-            
-            String text = textField.getText();
-            label.setText(text);
-            System.out.println("Введенный текст: " + text);
+            notifyObservers();
         }
 });
 
