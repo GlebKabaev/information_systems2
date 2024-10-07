@@ -1,11 +1,18 @@
 package view;
 import javax.swing.*;
-
+import java.util.*;
 import controller.MainViewController;
-public class MainView {
-    public static void openFrame() {
-        JFrame frame = new JFrame("Главное окно");
-        JLabel label = new JLabel("Welcome");
+import controller.Observer;
+public class MainView implements Observer{
+    private static MainView mainView;
+    private JFrame frame = new JFrame("Главное окно");
+    private JLabel label = new JLabel("Welcome");
+    private JList<String> jlist=new JList<>() ;
+    @Override
+    public void update(ArrayList<String> newInfo) {
+        jlist=new JList<>(newInfo.toArray(new String[0]));
+    }
+    private MainView() {
         label.setBounds(50, 150, 200, 30);
         frame.add(label); // Добавляем лейбл в окно
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -16,7 +23,17 @@ public class MainView {
         frame.add(textField);
         JButton button = MainViewController.showButton(textField,label);
         button.setBounds(50, 80, 200, 30); // Устанавливаем размеры и положение кнопки
+        jlist.setBounds(50,180, 300, 900);
+        frame.add(jlist); // Добавляем список в окно
         frame.add(button);
         frame.setVisible(true);
+    }
+    
+    //синглтон 
+    public static MainView openFrame() {
+        if(mainView == null){
+            mainView = new MainView();
+        }
+        return mainView;
     }
 }
